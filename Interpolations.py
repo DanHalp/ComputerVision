@@ -10,7 +10,7 @@ def resize_image(image, f, resoultion=None, intepolation="bilinear"):
     :return:
     """
 
-    def resize_by_f(img, f, axis=1):
+    def _resize_by_f(img, f, axis=1):
 
         if f < 1:
             if axis:
@@ -39,8 +39,8 @@ def resize_image(image, f, resoultion=None, intepolation="bilinear"):
     else:
         fh, fw = f
 
-    res = resize_by_f(image, fh, axis=0)
-    res = resize_by_f(res, fw, axis=1)
+    res = _resize_by_f(image, fh, axis=0)
+    res = _resize_by_f(res, fw, axis=1)
 
     return res[0] if grayscale else res
 
@@ -74,16 +74,14 @@ def linear_interpolation(inp, f):
     res[:, :, new_ind] = inp[:, :, ind]
     return res
 
-import sys
-import numpy
-numpy.set_printoptions(threshold=sys.maxsize)
 
-img = cv.imread(r"Images\tweeter.jpg")
-img = img.transpose([2, 0, 1])
-en = resize_image(img, (2,3)).astype("uint8")
-img = img.transpose([1, 2, 0])
-en = en.transpose([1, 2, 0])
-cv.imshow("new", en)
-cv.imshow("org", img)
-cv.waitKey(0)
+if __name__ == '__main__':
+    img = cv.imread(r"Images\mona_lisa.jpg")
+    img = img.transpose([2, 0, 1])
+    en = resize_image(img, (0.2,0.3)).astype("uint8")
+    img = img.transpose([1, 2, 0])
+    en = en.transpose([1, 2, 0])
+    cv.imshow("new", en)
+    cv.imshow("org", img)
+    cv.waitKey(0)
 
