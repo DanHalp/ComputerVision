@@ -75,10 +75,31 @@ def linear_interpolation(inp, f):
     return res
 
 
+def flip(img, axis=0):
+
+    assert img.ndim in [2, 3]
+
+    grayscale = False
+    if img.ndim == 2:
+        grayscale = True
+        img = img[None]
+
+    if axis == 1:
+        img = img[:, :, ::-1]
+    elif axis == 0:
+        img = img[:, ::-1]
+    else:
+        img = img[:, ::-1, ::-1]
+
+    return img[0] if grayscale else img
+
+
 if __name__ == '__main__':
-    img = cv.imread(r"Images\mona_lisa.jpg")
+    img = cv.imread(r"Images\tweeter.jpg")
     img = img.transpose([2, 0, 1])
-    en = resize_image(img, (0.2,0.3)).astype("uint8")
+    # en = resize_image(img, (0.2,0.3)).astype("uint8")
+    x = np.arange(9).reshape((3,3))
+    en = flip(img, axis=-1).astype("uint8")
     img = img.transpose([1, 2, 0])
     en = en.transpose([1, 2, 0])
     cv.imshow("new", en)
