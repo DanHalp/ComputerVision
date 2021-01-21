@@ -93,6 +93,9 @@ def flip(img, axis=0):
 
     return img[0] if grayscale else img
 
+def sheer(img):
+    pass
+
 
 if __name__ == '__main__':
     img = cv.imread(r"Images\tweeter.jpg")
